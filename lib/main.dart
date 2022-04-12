@@ -6,71 +6,169 @@ void showLayoutGuidelines() {
 }
 
 void main() {
-  showLayoutGuidelines();
-  runApp(const MyApp());
+  // showLayoutGuidelines();
+  runApp(const KakaoTalk());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+class KakaoTalk extends StatefulWidget {
+  const KakaoTalk({Key? key}) : super(key: key);
+  @override
+  State<KakaoTalk> createState() => _KakaoTalkState();
+}
+
+class _KakaoTalkState extends State<KakaoTalk> {
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: MyHomePage(),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key}) : super(key: key);
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'KakaoTalk',
+      theme: ThemeData(
+        brightness: Brightness.dark,
+        primaryColor: Color(0xFF000000),
+      ),
+      home: Scaffold(
+        appBar: AppBar(
+          title: Text('친구'),
+          elevation: 0,
+          actions: <Widget>[
+            IconButton(onPressed: () {}, icon: Icon(Icons.search)),
+            IconButton(onPressed: () {}, icon: Icon(Icons.person_add_alt_1_outlined)),
+            IconButton(onPressed: () {}, icon: Icon(Icons.music_note)),
+            IconButton(onPressed: () {}, icon: Icon(Icons.settings)),
+          ],
+        ),
+        body: ListView(
+          // https://docs.flutter.dev/development/ui/layout#listview
+          children: [
+            ListTile(
+              title: Text('title',
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w500,
+                    fontSize: 20,
+                  )),
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                FloatingActionButton(
-                  onPressed: () => setState(
-                    () {
-                      _counter--;
-                    },
-                  ),
-                  child: const Icon(Icons.remove),
-                ),
-                FloatingActionButton(
-                  onPressed: () => setState(
-                    () {
-                      _counter++;
-                    },
-                  ),
-                  child: const Icon(Icons.add),
-                )
-              ],
+            ListTile(
+              title: Text('title',
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w500,
+                    fontSize: 20,
+                  )),
+            ),
+            ListTile(
+              title: Text('title',
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w500,
+                    fontSize: 20,
+                  )),
+            ),
+            ListTile(
+              title: Text('title',
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w500,
+                    fontSize: 20,
+                  )),
+            ),
+            ListTile(
+              title: Text('title',
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w500,
+                    fontSize: 20,
+                  )),
+            ),
+            ListTile(
+              title: Text('title',
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w500,
+                    fontSize: 20,
+                  )),
+            ),
+            ListTile(
+              title: Text('title',
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w500,
+                    fontSize: 20,
+                  )),
+            ),
+            ListTile(
+              title: Text('title',
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w500,
+                    fontSize: 20,
+                  )),
+            ),
+            ListTile(
+              title: Text('title',
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w500,
+                    fontSize: 20,
+                  )),
+            ),
+            ListTile(
+              title: Text('title',
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w500,
+                    fontSize: 20,
+                  )),
+            ),
+            ListTile(
+              title: Text('title',
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w500,
+                    fontSize: 20,
+                  )),
+            ),
+            ListTile(
+              title: Text('title',
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w500,
+                    fontSize: 20,
+                  )),
+            ),
+            ListTile(
+              title: Text('title',
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w500,
+                    fontSize: 20,
+                  )),
+            ),
+            ListTile(
+              title: Text('title',
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w500,
+                    fontSize: 20,
+                  )),
+            ),
+            ListTile(
+              title: Text('title',
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w500,
+                    fontSize: 20,
+                  )),
+            ),
+            ListTile(
+              title: Text('title',
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w500,
+                    fontSize: 20,
+                  )),
+            ),
+            ListTile(
+              title: Text('title',
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w500,
+                    fontSize: 20,
+                  )),
+            ),
+            ListTile(
+              title: Text('title',
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w500,
+                    fontSize: 20,
+                  )),
             ),
           ],
         ),
       ),
-
-      // floatingActionButton: FloatingActionButton(
-      //   onPressed: () => setState(() {
-      //     _counter++;
-      //     print(_counter);
-      //   }),
-      //   child: const Icon(Icons.add),
-      // ),
     );
   }
 }

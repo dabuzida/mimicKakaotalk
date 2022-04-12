@@ -1,6 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 
 void main() {
+  showLayoutGuidelines();
+  runApp(const MyApp());
+}
+
+void main() {
+  showLayoutGuidelines();
   runApp(const MyApp());
 }
 
