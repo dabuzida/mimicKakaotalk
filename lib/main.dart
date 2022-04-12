@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+
+void showLayoutGuidelines() {
+  debugPaintSizeEnabled = true;
+}
 
 void main() {
+  showLayoutGuidelines();
   runApp(const MyApp());
 }
 
@@ -9,53 +15,62 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      title: 'Flutter Demo',
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      home: MyHomePage(),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
-  final String title;
+  const MyHomePage({Key? key}) : super(key: key);
   @override
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
             Text(
               '$_counter',
               style: Theme.of(context).textTheme.headline4,
             ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                FloatingActionButton(
+                  onPressed: () => setState(
+                    () {
+                      _counter--;
+                    },
+                  ),
+                  child: const Icon(Icons.remove),
+                ),
+                FloatingActionButton(
+                  onPressed: () => setState(
+                    () {
+                      _counter++;
+                    },
+                  ),
+                  child: const Icon(Icons.add),
+                )
+              ],
+            ),
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: () => setState(() {
+      //     _counter++;
+      //     print(_counter);
+      //   }),
+      //   child: const Icon(Icons.add),
+      // ),
     );
   }
 }
