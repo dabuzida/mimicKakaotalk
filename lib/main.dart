@@ -18,6 +18,36 @@ class KakaoTalk extends StatefulWidget {
 
 class _KakaoTalkState extends State<KakaoTalk> {
   @override
+  void initState() {
+    Widget n = _tile('AMC Metreon 16', '135 4th St #3000', Icons.theaters);
+    // _tile('AMC Metreon 16', '135 4th St #3000', Icons.theaters),
+  }
+
+  Widget n = ListTile(title: Text('title'), subtitle: Text('subtitle'), leading: Icon(Icons.theaters));
+  // Widget n = _tile('AMC Metreon 16', '135 4th St #3000', Icons.theaters);
+
+  List<ListTile> _list = [];
+
+  // Widget _friendList = Column(children: [_list.]);
+
+/* 
+    ListTile(
+          title: Text(title,
+              style: const TextStyle(
+                fontWeight: FontWeight.w500,
+                fontSize: 20,
+                color: Colors.black54,
+              )),
+          subtitle: Text(subtitle),
+          leading: Icon(
+            icon,
+            color: Colors.blue[500],
+          ),
+        );
+
+ */
+
+  @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -35,7 +65,14 @@ class _KakaoTalkState extends State<KakaoTalk> {
           elevation: 0,
           actions: <Widget>[
             IconButton(onPressed: () {}, icon: const Icon(Icons.search)),
-            IconButton(onPressed: () {}, icon: const Icon(Icons.person_add_alt_1_outlined)),
+            IconButton(
+                onPressed: () {
+                  setState(() {
+// _friendList
+                    // _tile('AMC Metreon 16', '135 4th St #3000', Icons.theaters);
+                  });
+                },
+                icon: const Icon(Icons.person_add_alt_1_outlined)),
             IconButton(onPressed: () {}, icon: const Icon(Icons.music_note_outlined)),
             IconButton(onPressed: () {}, icon: const Icon(Icons.settings_sharp)),
           ],
@@ -67,8 +104,11 @@ class _KakaoTalkState extends State<KakaoTalk> {
         ),
         body: ListView(
           children: [
+            ..._list
             // https://docs.flutter.dev/development/ui/layout#listview
-            _buildList(),
+            // _buildList(),
+            // _friendList
+            // _tile('AMC Metreon 16', '135 4th St #3000', Icons.theaters),
           ],
         ),
       ),
@@ -78,17 +118,16 @@ class _KakaoTalkState extends State<KakaoTalk> {
   Widget _buildList() {
     return Column(
       children: [
-        _tile('CineArts at the Empire', '85 W Portal Ave', Icons.theaters),
-        _tile('The Castro Theater', '429 Castro St', Icons.theaters),
-        _tile('Alamo Drafthouse Cinema', '2550 Mission St', Icons.theaters),
-        _tile('Roxie Theater', '3117 16th St', Icons.theaters),
-        _tile('United Artists Stonestown Twin', '501 Buckingham Way', Icons.theaters),
+        /*  _tile('AMC Metreon 16', '135 4th St #3000', Icons.theaters),
+        _tile('AMC Metreon 16', '135 4th St #3000', Icons.theaters),
+        _tile('AMC Metreon 16', '135 4th St #3000', Icons.theaters),
+        _tile('AMC Metreon 16', '135 4th St #3000', Icons.theaters),
         _tile('AMC Metreon 16', '135 4th St #3000', Icons.theaters),
         const Divider(),
         _tile('K\'s Kitchen', '757 Monterey Blvd', Icons.restaurant),
         _tile('Emmy\'s Restaurant', '1923 Ocean Ave', Icons.restaurant),
         _tile('Chaiya Thai Restaurant', '272 Claremont Blvd', Icons.restaurant),
-        _tile('La Ciccia', '291 30th St', Icons.restaurant),
+        _tile('La Ciccia', '291 30th St', Icons.restaurant), */
       ],
     );
   }
