@@ -1,13 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
+import 'test_ListViewBuilder.dart';
+
 void showLayoutGuidelines() {
   debugPaintSizeEnabled = true;
 }
 
 void main() {
   // showLayoutGuidelines();
-  runApp(const KakaoTalk());
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Scaffold(
+        backgroundColor: Colors.green[100],
+        body: ListViewBuilder(),
+        // body: KakaoTalk(),
+      ),
+    );
+  }
 }
 
 class KakaoTalk extends StatefulWidget {
