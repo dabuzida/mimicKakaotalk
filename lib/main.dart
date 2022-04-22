@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       home: Scaffold(
         backgroundColor: Colors.green[100],
-        body: ListViewBuilder(),
+        body: const ListViewBuilder(), // 계산기 관련 테스트
         // body: KakaoTalk(),
       ),
     );

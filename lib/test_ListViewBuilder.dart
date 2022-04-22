@@ -12,6 +12,14 @@ class _ListViewBuilderState extends State<ListViewBuilder> {
   // ListView.builder에 key, value를 분리해서 다루는 방법
   final List<String> entries = <String>['A', 'B', 'C', 'B', 'C', 'B', 'C'];
   final List<int> colorCodes = <int>[600, 500, 100, 500, 100, 500, 100];
+  final List<Map<String, String>> i = [
+    {'oasdfsdfne': '13425345'},
+    {'tsdfdsfwo': '2e5t34t3'},
+    {'thrsdfdsfee': '45r34tdfgg3'},
+  ];
+  final List<String> ii = ['one', 'two'];
+  final List<String> iii = ['1', '2'];
+
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -20,14 +28,21 @@ class _ListViewBuilderState extends State<ListViewBuilder> {
         height: 300,
         color: Colors.grey,
         child: ListView.builder(
-            padding: const EdgeInsets.all(8),
-            itemCount: entries.length,
+            itemCount: i.length,
             itemBuilder: (BuildContext context, int index) {
-              return Container(
-                height: 50,
-                color: Colors.amber[colorCodes[index]],
-                child: Center(child: Text('Entry ${entries[index]}')),
-              );
+              return SizedBox(
+                  height: 50,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Text(i[index].keys.single),
+                      Text(i[index].values.last),
+                      // Text(ii[index]),
+                      // Text(iii[index]),
+                    ],
+                  )
+                  // Center(child: Text('Entry ${entries[index]}')),
+                  );
             }),
       ),
     );
