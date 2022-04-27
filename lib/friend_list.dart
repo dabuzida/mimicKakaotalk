@@ -13,21 +13,24 @@ class FriendList extends StatefulWidget {
 }
 
 class _FriendListState extends State<FriendList> {
-  final List _friendLIst = [
+  final List _nFriendList = [
     // {'name': '피카츄', 'image': 'xxix__', 'timeCreated': '2022년 10월 1일 02시 33분 23초'},
     // {'name': '파이리', 'image': 'vix_v_', 'timeCreated': '2022년 12월 1일 02시 33분 23초'},
     // {'name': '꼬북이', 'image': 'xivxix_vv_', 'timeCreated': '2022년 11월 1일 02시 33분 23초'},
     // {'name': 'xuiu', 'image': 'xaaxevf', 'timeCreated': '2022년 11월 1일 02시 33분 23초'},
   ];
+  final List _sFriendList = [];
   // Widget n = ListTile(title: Text('title'), subtitle: Text('subtitle'), leading: Icon(Icons.theaters));
   // Widget n = _tile('AMC Metreon 16', '135 4th St #3000', Icons.theaters);
 
   // List<ListTile> _list = [];
 
   // Widget _friendList = Column(children: [_list.]);
-  String search = '';
-  List names = ['neo', 'booker', 'david', 'christine', 'dash', 'evan', 'huan', 'james', 'jadey', 'daniel'];
-  // List images = ['a.jpg', 'b.jpg', 'c.jpg', 'd.jpg', 'e.jpg', 'f.jpg', 'g.jpg', 'h.jpg', 'i.jpg'];
+  String searchWord = '';
+  final _controller = TextEditingController();
+
+  bool mode = true; // true: normal mode, false: search mode
+  List names = ['neo', 'booker', 'ㄱ무룐', 'david', 'christine', '홍길동', '도깨비', 'dash', 'evan', 'huan', 'james', 'jadey', 'daniel'];
   // 이미지는 랜덤 url로
   // https://picsum.photos/50
   // https://picsum.photos/id/237/50   // 0~1084
@@ -51,22 +54,79 @@ class _FriendListState extends State<FriendList> {
 
   @override
   Widget build(BuildContext context) {
-    print(_friendLIst);
+    // print(_nFriendList);
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
-        foregroundColor: const Color(0xFFFFFFFF),
-        backgroundColor: const Color(0xFF000000),
+        // foregroundColor: const Color(0xFFFFFFFF),
+        // backgroundColor: const Color(0xFF000000),
+        foregroundColor: Colors.black,
+        backgroundColor: Colors.green[100],
         leading: const Center(
           child: Text(
             '친구',
             style: TextStyle(fontSize: 20),
           ),
         ),
-        title: IconButton(onPressed: () {}, icon: const Icon(Icons.search)),
+        title: Flex(
+          direction: Axis.horizontal,
+          children: <Widget>[
+            Expanded(
+              child: TextField(
+                // controller: TextEditingController(),
+                controller: _controller,
+                decoration: InputDecoration(
+                  hintText: 'Search Friends',
+                  filled: true,
+                  prefixIcon: const Icon(Icons.account_box, size: 28.0),
+                  suffixIcon: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      IconButton(
+                        // X버튼 클릭시
+                        icon: const Icon(Icons.clear),
+                        onPressed: () {
+                          _controller.clear();
+                          setState(() {
+                            mode = true;
+                            _sFriendList.clear();
+                          });
+                        },
+                      ),
+                      IconButton(
+                          icon: const Icon(Icons.search),
+                          // 돋보기버튼 클릭시
+                          onPressed: () {
+                            for (int i = 0; i < _nFriendList.length; i++) {
+                              if (_nFriendList[i]['name'].contains(searchWord)) _sFriendList.add(_nFriendList[i]);
+                            }
+                            _controller.clear();
+                            setState(() {
+                              mode = false;
+                            });
+                          }),
+                    ],
+                  ),
+                ),
+                onChanged: (text) {
+                  searchWord = text;
+                },
+                // textfield에서 엔터 칠시
+                onSubmitted: (String text) {
+                  for (int i = 0; i < _nFriendList.length; i++) {
+                    if (_nFriendList[i]['name'].contains(searchWord)) _sFriendList.add(_nFriendList[i]);
+                  }
+                  _controller.clear();
+                  setState(() {
+                    mode = false;
+                  });
+                },
+              ),
+            ),
+          ],
+        ),
         centerTitle: true,
         actions: <Widget>[
-          IconButton(onPressed: () {}, icon: const Icon(Icons.search)),
           IconButton(
               onPressed: () {
                 setState(() {
@@ -74,10 +134,35 @@ class _FriendListState extends State<FriendList> {
                   String _imageUri = 'https://picsum.photos/id/$imageId/100';
                   String _name = names[Random().nextInt(names.length)];
                   DateTime now = DateTime.now();
-                  DateFormat format = DateFormat('yyyy년 MM월 dd일 E HH시 mm분 ss.SSS초');
+                  String day = DateFormat('E').format(now);
+                  switch (day) {
+                    case 'Mon':
+                      day = '월';
+                      break;
+                    case 'Tue':
+                      day = '화';
+                      break;
+                    case 'Wed':
+                      day = '수';
+                      break;
+                    case 'Thu':
+                      day = '목';
+                      break;
+                    case 'Fri':
+                      day = '금';
+                      break;
+                    case 'Sat':
+                      day = '토';
+                      break;
+                    case 'Sun':
+                      day = '일';
+                      break;
+                    default:
+                  }
+                  DateFormat format = DateFormat('yyyy년 MM월 dd일 $day HH시 mm분 ss.SSS초');
                   String _formatted = format.format(now);
                   // Person p1 = Person(name: 'name', image: 'image', timeCreated: formatted);
-                  _friendLIst.add({
+                  _nFriendList.add({
                     'image': _imageUri,
                     'name': _name,
                     'timeCreated': _formatted,
@@ -93,7 +178,7 @@ class _FriendListState extends State<FriendList> {
       ),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed, // Fixed
-        backgroundColor: const Color(0xFF000000), // <-- This works for fixed
+        backgroundColor: Colors.green[100], //const Color(0xFF000000),
         showSelectedLabels: false,
         showUnselectedLabels: false,
 
@@ -104,8 +189,8 @@ class _FriendListState extends State<FriendList> {
           BottomNavigationBarItem(icon: Icon(Icons.shopping_bag_outlined), label: ''),
           BottomNavigationBarItem(icon: Icon(Icons.more_horiz_outlined), label: ''),
         ],
-        selectedIconTheme: const IconThemeData(
-          color: Color.fromARGB(255, 206, 236, 37),
+        selectedIconTheme: IconThemeData(
+          color: Colors.red[900],
           size: 24,
         ),
         unselectedIconTheme: const IconThemeData(
@@ -115,39 +200,86 @@ class _FriendListState extends State<FriendList> {
         // currentIndex: _selectedIndex,
         // onTap: _onItemTapped,
       ),
-      body: search.isEmpty ? normalMode() : searchMode(),
+      body: mode ? normalMode() : searchMode(),
     );
   }
 
   Widget normalMode() {
+    print('normalMode');
+    print('searchWord: $searchWord');
     return ListView.builder(
-        itemCount: _friendLIst.length,
+        itemCount: _nFriendList.length,
         itemBuilder: (BuildContext context, int index) {
-          return _item(_friendLIst[_friendLIst.length - index - 1]['image'], _friendLIst[_friendLIst.length - index - 1]['name'], _friendLIst[_friendLIst.length - index - 1]['timeCreated'], index);
+          return _item(
+            _nFriendList[_nFriendList.length - index - 1]['image'],
+            _nFriendList[_nFriendList.length - index - 1]['name'],
+            _nFriendList[_nFriendList.length - index - 1]['timeCreated'],
+            index,
+          );
         });
   }
 
   Widget searchMode() {
+    print('searchMode');
+    print('searchWord: $searchWord');
     return ListView.builder(
-        // itemCount: vi.length,
+        itemCount: _sFriendList.length,
         itemBuilder: (BuildContext context, int index) {
-      return Text('sdfsdfsdf');
-    });
+          return _item(
+            _sFriendList[_sFriendList.length - index - 1]['image'],
+            _sFriendList[_sFriendList.length - index - 1]['name'],
+            _sFriendList[_sFriendList.length - index - 1]['timeCreated'],
+            index,
+          );
+        });
   }
 
   Widget _item(String image, String name, String timeCreated, int index) {
     return TextButton(
       onPressed: () {
-        setState(() {
-          _friendLIst.removeAt(_friendLIst.length - index - 1);
-        });
+        if (mode) {
+          setState(() {
+            _nFriendList.removeAt(_nFriendList.length - index - 1);
+          });
+        }
+        if (!mode) {
+          setState(() {
+            _sFriendList.removeAt(_sFriendList.length - index - 1);
+          });
+        }
       },
+      // onPressed: () {},
       child: SizedBox(
         height: 100,
         child: Row(
           // mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            SizedBox(width: 400, child: Image.network(image)),
+            const SizedBox(width: 100),
+            SizedBox(
+              width: 100,
+              height: 100,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(50.0),
+                child: Image.network(
+                  image,
+                  errorBuilder: (context, error, stackTrace) {
+                    return Image.network('https://picsum.photos/id/254/100');
+                  },
+                ),
+              ),
+            ),
+            // Container(
+            //   width: 200,
+            //   decoration: BoxDecoration(
+            //     shape: BoxShape.circle,
+            //     image: DecorationImage(
+            //       image: NetworkImage(
+            //         image,
+            //       ),
+            //     ),
+            //   ),
+            // ),
+            const SizedBox(width: 100),
             SizedBox(
               width: 300,
               child: Text(
@@ -168,7 +300,7 @@ class _FriendListState extends State<FriendList> {
                   fontSize: 20,
                   fontWeight: FontWeight.w400,
                 ),
-                textAlign: TextAlign.right,
+                textAlign: TextAlign.center,
               ),
             ),
           ],
