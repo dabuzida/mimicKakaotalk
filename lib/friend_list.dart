@@ -4,8 +4,6 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-import 'person.dart';
-
 class FriendList extends StatefulWidget {
   const FriendList({Key? key}) : super(key: key);
   @override
@@ -13,12 +11,8 @@ class FriendList extends StatefulWidget {
 }
 
 class _FriendListState extends State<FriendList> {
-  final List _nFriendList = [
-    // {'name': '피카츄', 'image': 'xxix__', 'timeCreated': '2022년 10월 1일 02시 33분 23초'},
-    // {'name': '파이리', 'image': 'vix_v_', 'timeCreated': '2022년 12월 1일 02시 33분 23초'},
-    // {'name': '꼬북이', 'image': 'xivxix_vv_', 'timeCreated': '2022년 11월 1일 02시 33분 23초'},
-    // {'name': 'xuiu', 'image': 'xaaxevf', 'timeCreated': '2022년 11월 1일 02시 33분 23초'},
-  ];
+  // {'name': '피카츄', 'image': 'xxix__', 'timeCreated': '2022년 10월 1일 02시 33분 23초'},
+  final List _nFriendList = [];
   final List _sFriendList = [];
   // Widget n = ListTile(title: Text('title'), subtitle: Text('subtitle'), leading: Icon(Icons.theaters));
   // Widget n = _tile('AMC Metreon 16', '135 4th St #3000', Icons.theaters);
