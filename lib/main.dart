@@ -1,5 +1,8 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:intl/intl.dart';
 
 import 'chat_list.dart';
 import 'friend_list.dart';
@@ -18,19 +21,10 @@ class KakaoTalk extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       title: 'KakaoTalk',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-          // brightness: Brightness.dark,
-          // primaryColor: const Color(0xFF5511dd),
-          // primarySwatch: Color(0xFFFFFFFF),
-          ),
-//       home: const WidgetGate(),
-//     );
-//   }
-// }
-      home: const FriendList(),
+      home: WidgetGate(),
     );
   }
 }
@@ -47,6 +41,7 @@ class _WidgetGateState extends State<WidgetGate> {
   static const List<Widget> widgets = <Widget>[
     FriendList(),
     ChatList(),
+    Text('none'),
   ];
 
   void selectWidget(int index) {
@@ -58,46 +53,100 @@ class _WidgetGateState extends State<WidgetGate> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.green[200],
-      appBar: AppBar(
-        title: const Text('flutter sample'),
-        elevation: 0,
-        foregroundColor: Colors.yellow[300],
-        backgroundColor: Colors.purple,
-        centerTitle: true,
-      ),
-      body: Center(
-        child: widgets.elementAt(selectedIndex),
-      ),
+      // backgroundColor: Colors.green[200],
+      // floatingActionButton: selectedIndex == 0 ? FloatingActionButton(onPressed: () {}) : null,
+      appBar: selectedIndex == 0
+          ? AppBar(
+              title: const Text('Friend List'),
+              elevation: 0,
+              foregroundColor: Colors.blue[900],
+              backgroundColor: Colors.green[100],
+              centerTitle: true,
+              actions: <Widget>[
+                IconButton(
+                    onPressed: () {
+                      setState(() {
+                        int imageId = Random().nextInt(1085);
+                        String _imageUri = 'https://picsum.photos/id/$imageId/100';
+                        // String _name = names[Random().nextInt(names.length)];
+                        DateTime now = DateTime.now();
+                        String day = DateFormat('E').format(now);
+                        switch (day) {
+                          case 'Mon':
+                            day = '월';
+                            break;
+                          case 'Tue':
+                            day = '화';
+                            break;
+                          case 'Wed':
+                            day = '수';
+                            break;
+                          case 'Thu':
+                            day = '목';
+                            break;
+                          case 'Fri':
+                            day = '금';
+                            break;
+                          case 'Sat':
+                            day = '토';
+                            break;
+                          case 'Sun':
+                            day = '일';
+                            break;
+                          default:
+                        }
+                        DateFormat format = DateFormat('yyyy년 MM월 dd일 $day HH시 mm분 ss.SSS초');
+                        String _formatted = format.format(now);
+                        // _nFriendList.add({
+                        //   'image': _imageUri,
+                        //   'name': _name,
+                        //   'timeCreated': _formatted,
+                        // });
+                      });
+                    },
+                    icon: const Icon(Icons.person_add_alt_1_outlined)), // 친구추가버튼
+                IconButton(onPressed: () {}, icon: const Icon(Icons.music_note_outlined)),
+                IconButton(onPressed: () {}, icon: const Icon(Icons.settings_sharp)),
+              ],
+            )
+          : selectedIndex == 1
+              ? AppBar(
+                  title: const Text('Chat List'),
+                  elevation: 0,
+                  foregroundColor: Colors.blue[900],
+                  backgroundColor: Colors.green[100],
+                  centerTitle: true,
+                )
+              : AppBar(
+                  title: const Text('Shopping'),
+                  elevation: 0,
+                  foregroundColor: Colors.blue[900],
+                  backgroundColor: Colors.green[100],
+                  centerTitle: true,
+                ),
+      body: widgets.elementAt(selectedIndex),
       bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed, // ?
+        // showSelectedLabels: false,
+        // showUnselectedLabels: false,
+        elevation: 0,
+        backgroundColor: Colors.green[100],
         currentIndex: selectedIndex,
         onTap: selectWidget,
-        selectedItemColor: Colors.cyanAccent[100],
+        selectedItemColor: Colors.teal[900],
+        unselectedItemColor: Colors.red[900],
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(Icons.calculate),
-            label: 'i',
-            backgroundColor: Colors.black,
+            icon: Icon(Icons.person),
+            label: 'FriendList',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.eco_outlined),
-            label: 'ii',
-            backgroundColor: Colors.black,
+            icon: Icon(Icons.chat_bubble_outline),
+            label: 'ChatList',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.school),
-            label: 'iii',
-            backgroundColor: Colors.black,
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.church),
-            label: 'iv',
-            backgroundColor: Colors.black,
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.restaurant),
-            label: 'v',
-            backgroundColor: Colors.black,
+            icon: Icon(Icons.visibility_outlined),
+            label: 'Shopping',
           ),
         ],
       ),
