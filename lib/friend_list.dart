@@ -4,6 +4,8 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+import 'friend_profile.dart';
+
 class FriendList extends StatefulWidget {
   const FriendList({Key? key}) : super(key: key);
   @override
@@ -23,7 +25,7 @@ class _FriendListState extends State<FriendList> {
   String searchWord = '';
   final _controller = TextEditingController();
   bool mode = true; // true: normal mode, false: search mode
-  List names = ['neo', 'booker', 'ㄱ무룐', 'david', 'christine', '홍길동', '도깨비', 'dash', 'evan', 'huan', 'james', 'jadey', 'daniel'];
+  List names = ['Neo', 'Booker', 'ㄱ무룐', 'David', 'Christine', '홍길동', '도깨비', 'Dash', 'Evan', 'Huan', 'James', 'Jadey', 'Daniel'];
   // 이미지는 랜덤 url로
   // https://picsum.photos/50
   // https://picsum.photos/id/237/50   // 0~1084
@@ -52,7 +54,7 @@ class _FriendListState extends State<FriendList> {
         onPressed: () {
           setState(() {
             int imageId = Random().nextInt(1085);
-            String _imageUri = 'https://picsum.photos/id/$imageId/200';
+            String _imageUri = 'https://picsum.photos/id/$imageId/100';
             String _name = names[Random().nextInt(names.length)];
             DateTime now = DateTime.now();
             String day = DateFormat('E').format(now);
@@ -196,12 +198,20 @@ class _FriendListState extends State<FriendList> {
   Widget _item(String image, String name, String timeCreated, int index) {
     return /* ListTile(
       onTap: () {
-        print('$index');
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => FriendProfile(
+              image: image.substring(0, image.length - 3),
+              name: name,
+            ),
+          ),
+        );
       },
-      // dense: true,
-      // visualDensity: VisualDensity(vertical: 3),
       leading: CircleAvatar(
-        backgroundImage: NetworkImage(image,),
+        backgroundImage: NetworkImage(
+          image,
+        ),
         backgroundColor: Colors.transparent,
       ),
       title: Text(
@@ -235,10 +245,10 @@ class _FriendListState extends State<FriendList> {
         },
         child: SizedBox(
           width: 70,
-          height: 110,
+          // height: 110,
           child: Icon(
             Icons.delete_forever_outlined,
-            size: 30,
+            size: 50,
             color: Colors.grey[400],
           ),
         ),
@@ -251,7 +261,17 @@ class _FriendListState extends State<FriendList> {
         children: <Widget>[
           Expanded(
             child: TextButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => FriendProfile(
+                      image: image.substring(0, image.length - 3),
+                      name: name,
+                    ),
+                  ),
+                );
+              },
               child: Row(
                 children: <Widget>[
                   SizedBox(

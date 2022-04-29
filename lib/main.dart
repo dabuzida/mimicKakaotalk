@@ -37,7 +37,7 @@ class WidgetGate extends StatefulWidget {
 }
 
 class _WidgetGateState extends State<WidgetGate> {
-  int selectedIndex = 0;
+  int selectedIndex = 1;
   static const List<Widget> widgets = <Widget>[
     FriendList(),
     ChatList(),
@@ -67,7 +67,7 @@ class _WidgetGateState extends State<WidgetGate> {
                     onPressed: () {
                       setState(() {
                         int imageId = Random().nextInt(1085);
-                        String _imageUri = 'https://picsum.photos/id/$imageId/100';
+                        String _imageUri = 'https://picsum.photos/id/$imageId/200';
                         // String _name = names[Random().nextInt(names.length)];
                         DateTime now = DateTime.now();
                         String day = DateFormat('E').format(now);
@@ -124,7 +124,15 @@ class _WidgetGateState extends State<WidgetGate> {
                   backgroundColor: Colors.green[100],
                   centerTitle: true,
                 ),
-      body: widgets.elementAt(selectedIndex),
+      body: IndexedStack(
+        index: selectedIndex,
+        children: const <Widget>[
+          FriendList(),
+          ChatList(),
+          Text('none'),
+        ],
+      ),
+      // body: widgets.elementAt(selectedIndex),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed, // ?
         // showSelectedLabels: false,
@@ -133,16 +141,16 @@ class _WidgetGateState extends State<WidgetGate> {
         backgroundColor: Colors.green[100],
         currentIndex: selectedIndex,
         onTap: selectWidget,
-        selectedItemColor: Colors.teal[900],
-        unselectedItemColor: Colors.red[900],
+        selectedItemColor: Colors.red[900],
+        unselectedItemColor: Colors.blue[900],
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.person),
-            label: 'FriendList',
+            label: 'Friends',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.chat_bubble_outline),
-            label: 'ChatList',
+            label: 'Chats',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.visibility_outlined),
