@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:intl/intl.dart';
+import 'package:mimic_kakaotalk/json_data.dart';
 
 import 'chat_list.dart';
 import 'friend_list.dart';
@@ -37,11 +38,12 @@ class WidgetGate extends StatefulWidget {
 }
 
 class _WidgetGateState extends State<WidgetGate> {
-  int selectedIndex = 1;
+  int selectedIndex = 3;
   static const List<Widget> widgets = <Widget>[
     FriendList(),
     ChatList(),
     Text('none'),
+    JsonData(),
   ];
 
   void selectWidget(int index) {
@@ -68,7 +70,6 @@ class _WidgetGateState extends State<WidgetGate> {
                       setState(() {
                         int imageId = Random().nextInt(1085);
                         String _imageUri = 'https://picsum.photos/id/$imageId/200';
-                        // String _name = names[Random().nextInt(names.length)];
                         DateTime now = DateTime.now();
                         String day = DateFormat('E').format(now);
                         switch (day) {
@@ -117,19 +118,28 @@ class _WidgetGateState extends State<WidgetGate> {
                   backgroundColor: Colors.green[100],
                   centerTitle: true,
                 )
-              : AppBar(
-                  title: const Text('Shopping'),
-                  elevation: 0,
-                  foregroundColor: Colors.blue[900],
-                  backgroundColor: Colors.green[100],
-                  centerTitle: true,
-                ),
+              : selectedIndex == 2
+                  ? AppBar(
+                      title: const Text('Shopping'),
+                      elevation: 0,
+                      foregroundColor: Colors.blue[900],
+                      backgroundColor: Colors.green[100],
+                      centerTitle: true,
+                    )
+                  : AppBar(
+                      title: const Text('JSON Data'),
+                      elevation: 0,
+                      foregroundColor: Colors.blue[900],
+                      backgroundColor: Colors.green[100],
+                      centerTitle: true,
+                    ),
       body: IndexedStack(
         index: selectedIndex,
         children: const <Widget>[
           FriendList(),
           ChatList(),
           Text('none'),
+          JsonData(),
         ],
       ),
       // body: widgets.elementAt(selectedIndex),
@@ -155,6 +165,10 @@ class _WidgetGateState extends State<WidgetGate> {
           BottomNavigationBarItem(
             icon: Icon(Icons.visibility_outlined),
             label: 'Shopping',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.flutter_dash),
+            label: 'JSON Data',
           ),
         ],
       ),
