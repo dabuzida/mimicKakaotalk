@@ -50,16 +50,36 @@ Future<List<Json>> fetchPost() async {
 
 class _JsonDataState extends State<JsonData> {
   late Future<List<Json>> json;
-
+  // List<Json>? ji;
   @override
   void initState() {
     super.initState();
     json = fetchPost();
+    print('=> $json');
   }
 
+// futurebuilder 없이, 받아온 데이터인 json을 출력
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<List<Json>>(
+    print(json);
+    return Column(
+      children: <Widget>[
+        TextButton(
+            onPressed: () async {
+              // List<Json> ji = await json;
+              // print(ji.last);
+              print((await json)[0]);
+            },
+            child: Container(
+              color: Colors.amber,
+              width: 300,
+              height: 300,
+            )),
+        // Text(ji.toString()),
+      ],
+    );
+
+    /* FutureBuilder<List<Json>>(
       future: json, // a previously-obtained Future<String> or null
       builder: (context, snapshot) {
         if (snapshot.hasData) {
@@ -85,6 +105,6 @@ class _JsonDataState extends State<JsonData> {
         // 기본적으로 로딩 Spinner를 보여줍니다.
         return CircularProgressIndicator();
       },
-    );
+    ); */
   }
 }
