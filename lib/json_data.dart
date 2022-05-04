@@ -62,7 +62,9 @@ class _JsonDataState extends State<JsonData> {
   @override
   Widget build(BuildContext context) {
     print(json);
-    return Column(
+    return
+        // 1
+        Column(
       children: <Widget>[
         TextButton(
             onPressed: () async {
@@ -79,6 +81,7 @@ class _JsonDataState extends State<JsonData> {
       ],
     );
 
+    // 2
     /* FutureBuilder<List<Json>>(
       future: json, // a previously-obtained Future<String> or null
       builder: (context, snapshot) {
