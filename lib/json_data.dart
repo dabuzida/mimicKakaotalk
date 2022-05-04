@@ -61,10 +61,9 @@ class _JsonDataState extends State<JsonData> {
 // futurebuilder 없이, 받아온 데이터인 json을 출력
   @override
   Widget build(BuildContext context) {
-    print(json);
     return
         // 1
-        Column(
+        /* Column(
       children: <Widget>[
         TextButton(
             onPressed: () async {
@@ -79,10 +78,10 @@ class _JsonDataState extends State<JsonData> {
             )),
         // Text(ji.toString()),
       ],
-    );
+    ); */
 
-    // 2
-    /* FutureBuilder<List<Json>>(
+        // 2
+        FutureBuilder<List<Json>>(
       future: json, // a previously-obtained Future<String> or null
       builder: (context, snapshot) {
         if (snapshot.hasData) {
@@ -108,6 +107,6 @@ class _JsonDataState extends State<JsonData> {
         // 기본적으로 로딩 Spinner를 보여줍니다.
         return CircularProgressIndicator();
       },
-    ); */
+    );
   }
 }
