@@ -11,19 +11,19 @@ class JsonData extends StatefulWidget {
 }
 
 class Json {
-  late int userId;
-  late int id;
+  late String userId;
+  late String id;
   late String title;
   late String body;
-  Json({required this.userId, required this.id, required this.title, required this.body});
 
   Json.fromJson(Map<String, dynamic> json) {
-    userId = json['userId'];
-    id = json['id'];
+    userId = json['userId'].toString();
+    id = json['id'].toString();
     title = json['title'];
     body = json['body'];
   }
-  /* factory Json.fromJson(Map<String, dynamic> json) {
+  /* Json({required this.userId, required this.id, required this.title, required this.body});
+  factory Json.fromJson(Map<String, dynamic> json) {
     return Json(
       userId: json['userId'],
       id: json['id'],
@@ -34,14 +34,20 @@ class Json {
 }
 
 Future<List<Json>> fetchPost() async {
+  String jsonRawData;
+  List jsonList;
+  List<Json> jsonTransformed;
   final response = await http.get(Uri.parse('https://jsonplaceholder.typicode.com/posts'));
-
+  await Future.delayed(const Duration(seconds: 1));
   if (response.statusCode == 200) {
     // 만약 서버로의 요청이 성공하면, JSON을 파싱합니다.
-    List list = jsonDecode(response.body);
-    List<Json> jsonList = list.map((e) => Json.fromJson(e)).toList();
-    return jsonList;
-    // return Json.fromJson(json.decode(response.body));
+    jsonRawData = response.body;
+    jsonList = jsonDecode(jsonRawData);
+    jsonTransformed = jsonList.map((e) => Json.fromJson(e)).toList();
+    print('${jsonRawData.runtimeType} >> $jsonRawData');
+    print('${jsonList.runtimeType} >> $jsonList');
+    print('${jsonTransformed.runtimeType} >> $jsonTransformed');
+    return jsonTransformed;
   } else {
     // 만약 요청이 실패하면, 에러를 던집니다.
     throw Exception('Failed to load post');
@@ -49,39 +55,59 @@ Future<List<Json>> fetchPost() async {
 }
 
 class _JsonDataState extends State<JsonData> {
-  late Future<List<Json>> json;
-  // List<Json>? ji;
+  late List<Json> jsonTransformed; // 1
+  late Future<List<Json>> json; // 2
+  bool flag = false;
+
+  requestData() async {
+    String jsonRawData;
+    List jsonList;
+    final response = await http.get(Uri.parse('https://jsonplaceholder.typicode.com/posts'));
+    await Future.delayed(const Duration(seconds: 1));
+
+    if (response.statusCode == 200) {
+      // jsonRawData(String, List) >> jsonList(List, dynamic) >> jsonTransformed (List, Json)
+      jsonRawData = response.body;
+      jsonList = jsonDecode(jsonRawData);
+      jsonTransformed = jsonList.map((e) => Json.fromJson(e)).toList();
+      print('${jsonRawData.runtimeType} >> $jsonRawData');
+      print('${jsonList.runtimeType} >> $jsonList');
+      print('${jsonTransformed.runtimeType} >> $jsonTransformed');
+      setState(() {
+        flag = true;
+      });
+    } else {
+      throw Exception('Failed to load post');
+    }
+  }
+
   @override
   void initState() {
     super.initState();
-    json = fetchPost();
-    print('=> $json');
+    requestData(); // 1
+    // json = fetchPost(); // 2
   }
 
-// futurebuilder 없이, 받아온 데이터인 json을 출력
   @override
   Widget build(BuildContext context) {
-    return
-        // 1
-        /* Column(
-      children: <Widget>[
-        TextButton(
-            onPressed: () async {
-              // List<Json> ji = await json;
-              // print(ji.last);
-              print((await json)[0]);
-            },
-            child: Container(
-              color: Colors.amber,
-              width: 300,
-              height: 300,
-            )),
-        // Text(ji.toString()),
-      ],
-    ); */
+    // 1: Without FutureBuilder, output json data received from json server
+    return Center(
+      child: flag
+          ? ListView.builder(
+              itemCount: jsonTransformed.length,
+              itemBuilder: (BuildContext context, int index) {
+                return ListTile(
+                  leading: Text(jsonTransformed[index].userId),
+                  title: Text(jsonTransformed[index].title),
+                  subtitle: Text(jsonTransformed[index].body),
+                  trailing: Text(jsonTransformed[index].id),
+                );
+              })
+          : Image.network('https://c.tenor.com/7NX24XoJX0MAAAAC/loading-fast.gif'),
+    );
 
-        // 2
-        FutureBuilder<List<Json>>(
+    // 2: With FutureBuilder, output json data received from json server
+    /* return FutureBuilder<List<Json>>(
       future: json, // a previously-obtained Future<String> or null
       builder: (context, snapshot) {
         if (snapshot.hasData) {
@@ -93,10 +119,10 @@ class _JsonDataState extends State<JsonData> {
                 return TextButton(
                   onPressed: () {},
                   child: ListTile(
-                    leading: Text(json.id.toString()),
+                    leading: Text(json.id),
                     title: Text(json.title),
                     subtitle: Text(json.body),
-                    trailing: Text(json.userId.toString()),
+                    trailing: Text(json.userId),
                   ),
                 );
                 // return Card(child: ListTile(title: Text(json.title)));
@@ -105,8 +131,8 @@ class _JsonDataState extends State<JsonData> {
           return Text("${snapshot.error}");
         }
         // 기본적으로 로딩 Spinner를 보여줍니다.
-        return CircularProgressIndicator();
+        return Center(child: CircularProgressIndicator());
       },
-    );
+    ); */
   }
 }

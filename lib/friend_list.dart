@@ -166,8 +166,8 @@ class _FriendListState extends State<FriendList> {
   }
 
   Widget normalMode() {
-    print('normalMode');
-    print('searchWord: $searchWord');
+    // print('normalMode');
+    // print('searchWord: $searchWord');
     return ListView.builder(
         itemCount: _nFriendList.length,
         itemBuilder: (BuildContext context, int index) {
@@ -182,7 +182,7 @@ class _FriendListState extends State<FriendList> {
 
   Widget searchMode() {
     print('searchMode');
-    print('searchWord: $searchWord');
+    // print('searchWord: $searchWord');
     return ListView.builder(
         itemCount: _sFriendList.length,
         itemBuilder: (BuildContext context, int index) {
