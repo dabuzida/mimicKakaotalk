@@ -49,8 +49,10 @@ class _FriendListState extends State<FriendList> {
 
   @override
   Widget build(BuildContext context) {
+    print('1');
     return Scaffold(
       floatingActionButton: FloatingActionButton(
+        heroTag: null,
         onPressed: () {
           setState(() {
             int imageId = Random().nextInt(1085);
@@ -254,100 +256,99 @@ class _FriendListState extends State<FriendList> {
         ),
       ),
     ); */
-        Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 10.0),
-      child: Row(
-        // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          Expanded(
-            child: Container(
-              color: Colors.amber,
-              child: TextButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => FriendProfile(
-                        image: image.substring(0, image.length - 3),
-                        name: name,
+
+        Row(
+      // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: <Widget>[
+        Expanded(
+          child: Container(
+            height: 110,
+            color: Colors.amber,
+            child: TextButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => FriendProfile(
+                      image: image.substring(0, image.length - 3),
+                      name: name,
+                    ),
+                  ),
+                );
+              },
+              child: Row(
+                children: <Widget>[
+                  SizedBox(
+                    width: 100,
+                    height: 100,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(50.0),
+                      child: Image.network(
+                        image,
+                        errorBuilder: (context, error, stackTrace) {
+                          return Image.network('https://picsum.photos/id/254/100');
+                        },
                       ),
                     ),
-                  );
-                },
-                child: Row(
-                  children: <Widget>[
-                    SizedBox(
-                      width: 100,
-                      height: 100,
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(50.0),
-                        child: Image.network(
-                          image,
-                          errorBuilder: (context, error, stackTrace) {
-                            return Image.network('https://picsum.photos/id/254/100');
-                          },
+                  ),
+                  const SizedBox(width: 10),
+                  Expanded(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Text(
+                          name,
+                          style: const TextStyle(
+                            color: Colors.black,
+                            fontSize: 30,
+                            fontWeight: FontWeight.w700,
+                          ),
+                          textAlign: TextAlign.center,
                         ),
-                      ),
-                    ),
-                    const SizedBox(width: 10),
-                    Expanded(
-                      child: FittedBox(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Text(
-                              name,
-                              style: const TextStyle(
-                                color: Colors.black,
-                                fontSize: 30,
-                                fontWeight: FontWeight.w700,
-                              ),
-                              textAlign: TextAlign.center,
+                        FittedBox(
+                          child: Text(
+                            timeCreated,
+                            style: const TextStyle(
+                              color: Colors.black,
+                              fontSize: 20,
+                              fontWeight: FontWeight.w400,
                             ),
-                            Text(
-                              timeCreated,
-                              style: const TextStyle(
-                                color: Colors.black,
-                                fontSize: 20,
-                                fontWeight: FontWeight.w400,
-                              ),
-                              textAlign: TextAlign.center,
-                            ),
-                          ],
+                            textAlign: TextAlign.center,
+                          ),
                         ),
-                      ),
+                      ],
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
           ),
-          TextButton(
-            onPressed: () {
-              if (mode) {
-                setState(() {
-                  _nFriendList.removeAt(_nFriendList.length - index - 1);
-                });
-              }
-              if (!mode) {
-                setState(() {
-                  _sFriendList.removeAt(_sFriendList.length - index - 1);
-                });
-              }
-            },
-            child: SizedBox(
-              width: 70,
-              height: 110,
-              child: Icon(
-                Icons.delete_forever_outlined,
-                size: 70,
-                color: Colors.grey[400],
-              ),
+        ),
+        TextButton(
+          onPressed: () {
+            if (mode) {
+              setState(() {
+                _nFriendList.removeAt(_nFriendList.length - index - 1);
+              });
+            }
+            if (!mode) {
+              setState(() {
+                _sFriendList.removeAt(_sFriendList.length - index - 1);
+              });
+            }
+          },
+          child: SizedBox(
+            width: 70,
+            height: 110,
+            child: Icon(
+              Icons.delete_forever_outlined,
+              size: 70,
+              color: Colors.grey[400],
             ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 

@@ -44,9 +44,9 @@ Future<List<Json>> fetchPost() async {
     jsonRawData = response.body;
     jsonList = jsonDecode(jsonRawData);
     jsonTransformed = jsonList.map((e) => Json.fromJson(e)).toList();
-    print('${jsonRawData.runtimeType} >> $jsonRawData');
-    print('${jsonList.runtimeType} >> $jsonList');
-    print('${jsonTransformed.runtimeType} >> $jsonTransformed');
+    // print('${jsonRawData.runtimeType} >> $jsonRawData');
+    // print('${jsonList.runtimeType} >> $jsonList');
+    // print('${jsonTransformed.runtimeType} >> $jsonTransformed');
     return jsonTransformed;
   } else {
     // 만약 요청이 실패하면, 에러를 던집니다.
@@ -70,9 +70,9 @@ class _JsonDataState extends State<JsonData> {
       jsonRawData = response.body;
       jsonList = jsonDecode(jsonRawData);
       jsonTransformed = jsonList.map((e) => Json.fromJson(e)).toList();
-      print('${jsonRawData.runtimeType} >> $jsonRawData');
-      print('${jsonList.runtimeType} >> $jsonList');
-      print('${jsonTransformed.runtimeType} >> $jsonTransformed');
+      // print('${jsonRawData.runtimeType} >> $jsonRawData');
+      // print('${jsonList.runtimeType} >> $jsonList');
+      // print('${jsonTransformed.runtimeType} >> $jsonTransformed');
       setState(() {
         flag = true;
       });
@@ -84,16 +84,18 @@ class _JsonDataState extends State<JsonData> {
   @override
   void initState() {
     super.initState();
-    requestData(); // 1
-    // json = fetchPost(); // 2
+    // requestData(); // 1
+    json = fetchPost(); // 2
   }
 
   @override
   Widget build(BuildContext context) {
+    print('4');
     // 1: Without FutureBuilder, output json data received from json server
-    return Center(
+    /* return Center(
       child: flag
           ? ListView.builder(
+              controller: ScrollController(),
               itemCount: jsonTransformed.length,
               itemBuilder: (BuildContext context, int index) {
                 return ListTile(
@@ -104,10 +106,10 @@ class _JsonDataState extends State<JsonData> {
                 );
               })
           : Image.network('https://c.tenor.com/7NX24XoJX0MAAAAC/loading-fast.gif'),
-    );
+    ); */
 
     // 2: With FutureBuilder, output json data received from json server
-    /* return FutureBuilder<List<Json>>(
+    return FutureBuilder<List<Json>>(
       future: json, // a previously-obtained Future<String> or null
       builder: (context, snapshot) {
         if (snapshot.hasData) {
@@ -133,6 +135,6 @@ class _JsonDataState extends State<JsonData> {
         // 기본적으로 로딩 Spinner를 보여줍니다.
         return Center(child: CircularProgressIndicator());
       },
-    ); */
+    );
   }
 }

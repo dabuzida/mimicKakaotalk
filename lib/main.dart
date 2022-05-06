@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:intl/intl.dart';
 import 'package:mimic_kakaotalk/json_data.dart';
+import 'package:mimic_kakaotalk/shopping.dart';
 
 import 'chat_list.dart';
 import 'friend_list.dart';
@@ -39,12 +40,35 @@ class WidgetGate extends StatefulWidget {
 
 class _WidgetGateState extends State<WidgetGate> {
   int selectedIndex = 3;
-  static const List<Widget> widgets = <Widget>[
-    FriendList(),
-    ChatList(),
-    Text('none'),
-    JsonData(),
-  ];
+  // static const List<Widget> widgets = <Widget>[
+  //   FriendList(),
+  //   ChatList(),
+  //   Shopping(),
+  //   JsonData(),
+  // ];
+  Widget _indexedStack() {
+    return IndexedStack(
+      index: selectedIndex,
+      children: const <Widget>[
+        FriendList(),
+        ChatList(),
+        Shopping(),
+        JsonData(),
+      ],
+    );
+  }
+
+/* 
+IndexedStack(
+        index: selectedIndex,
+        children: const <Widget>[
+          FriendList(),
+          ChatList(),
+          Text('none'),
+          JsonData(),
+        ],
+      ),
+ */
 
   void selectWidget(int index) {
     setState(() {
@@ -133,15 +157,7 @@ class _WidgetGateState extends State<WidgetGate> {
                       backgroundColor: Colors.green[100],
                       centerTitle: true,
                     ),
-      body: IndexedStack(
-        index: selectedIndex,
-        children: const <Widget>[
-          FriendList(),
-          ChatList(),
-          Text('none'),
-          JsonData(),
-        ],
-      ),
+      body: _indexedStack(),
       // body: widgets.elementAt(selectedIndex),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed, // ?

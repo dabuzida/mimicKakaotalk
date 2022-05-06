@@ -17,8 +17,10 @@ class _ChatListState extends State<ChatList> {
 
   @override
   Widget build(BuildContext context) {
+    print('2');
     return Scaffold(
       floatingActionButton: FloatingActionButton(
+        heroTag: null,
         onPressed: () {
           setState(() {
             int imageId = Random().nextInt(1085);
