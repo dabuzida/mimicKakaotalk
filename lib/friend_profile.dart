@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:mimic_kakaotalk/edit_my_profile.dart';
 
 class FriendProfile extends StatefulWidget {
   String name;
   String image;
-
+  String image2;
+  bool isHost;
   FriendProfile({
     Key? key,
     required this.name,
     required this.image,
+    required this.image2,
+    required this.isHost,
   }) : super(key: key);
   @override
   State<FriendProfile> createState() => _FriendProfileState();
@@ -37,15 +41,21 @@ class _FriendProfileState extends State<FriendProfile> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             SizedBox(
-              width: 300,
-              height: 300,
+              width: 100,
+              height: 100,
               child: ClipRRect(
-                borderRadius: BorderRadius.circular(150.0),
-                child: Image.network(
-                  // widget.image,
-                  _image,
+                borderRadius: BorderRadius.circular(50.0),
+                // child: Image.network(
+                //   // widget.image,
+                //   _image,
+                //   errorBuilder: (context, error, stackTrace) {
+                //     return Image.network('https://picsum.photos/id/254/300');
+                //   },
+                // ),
+                child: Image(
+                  image: AssetImage('profile/${widget.image2}'),
                   errorBuilder: (context, error, stackTrace) {
-                    return Image.network('https://picsum.photos/id/254/300');
+                    return Image.asset('meerkat.jpg');
                   },
                 ),
               ),
@@ -53,12 +63,24 @@ class _FriendProfileState extends State<FriendProfile> {
             const SizedBox(
               height: 10,
             ),
-            Text(
-              widget.name,
-              style: const TextStyle(
-                color: Colors.black,
-                fontSize: 60,
-                fontWeight: FontWeight.w700,
+            TextButton(
+              onPressed: () {
+                if (widget.isHost) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => EditMyProfile(),
+                    ),
+                  );
+                }
+              },
+              child: Text(
+                widget.name,
+                style: const TextStyle(
+                  color: Colors.black,
+                  fontSize: 60,
+                  fontWeight: FontWeight.w700,
+                ),
               ),
             ),
           ],
