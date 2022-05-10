@@ -25,7 +25,7 @@ class KakaoTalk extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      title: '###KakaoTalk###',
+      title: 'mimic_kakaotalk',
       debugShowCheckedModeBanner: false,
       home: WidgetGate(),
     );
